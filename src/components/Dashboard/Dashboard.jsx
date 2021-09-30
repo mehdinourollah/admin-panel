@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Dashbourd() {
+export default function Dashboard() {
     return (
         <div>
-            Dashboard
+            <marquee>Hey</marquee>
         </div>
     )
 }
