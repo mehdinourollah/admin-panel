@@ -7,14 +7,17 @@ function useToken() {
   const getToken = () => {
     const tokenString = sessionStorage.getItem('token');
     const userToken = JSON.parse(tokenString);
-    return userToken
+    return userToken;
+
   };
 
   const [token, setToken] = useState(getToken());
 
   const saveToken = userToken => {
-    sessionStorage.setItem('token', JSON.stringify(userToken));
-    setToken(userToken);
+    if (userToken) {
+      sessionStorage.setItem('token', userToken);
+      setToken(userToken);
+    }
   };
 
   return {
@@ -25,22 +28,22 @@ function useToken() {
 
 
 export default function App() {
-    const {token, setToken} = useToken()
+  const { token, setToken } = useToken()
 
-    if (!token) {
-        return <Login setToken={setToken} />
-    }
+  if (!token) {
+    return <Login setToken={setToken} />
+  }
 
-    return (
-        <div className="wrapper">
-            <h1>Application</h1>
-            <BrowserRouter>
-                <Switch>
-                    <Route path="/dashboard">
-                        <Dashboard />
-                    </Route>
-                </Switch>
-            </BrowserRouter>
-        </div>
-    )
+  return (
+    <div className="wrapper">
+      <h1>Application</h1>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </div>
+  )
 }

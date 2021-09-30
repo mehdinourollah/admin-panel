@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { PrimaryButton } from '../components/FormElements/Button';
 import Input from '../components/FormElements/Input';
-import {loginUser} from '../services'
+import { loginUser } from '../services'
 
-const Login = ({setToken}) => {
+const Login = ({ setToken }) => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -12,7 +12,7 @@ const Login = ({setToken}) => {
         let email = e.target.elements.email?.value;
         let password = e.target.elements.password?.value;
 
-        loginUser({email, password}).then(res => setToken(res.access_token))
+        loginUser({ email, password }).then(res => setToken(res.access_token)).catch(err => console.log(err));
     };
 
     const classes = {
@@ -58,4 +58,3 @@ Login.propTypes = {
 
 export default Login;
 
-    
