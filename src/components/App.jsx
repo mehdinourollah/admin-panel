@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Dashboard from './Dashboard/Dashboard';
 import Login from './Login'
+import Modal from './Modal/Modal'
 
 function useToken() {
   const getToken = () => {
     const tokenString = sessionStorage.getItem('token');
-    const userToken = JSON.parse(tokenString);
-    return userToken;
+    return tokenString;
 
   };
 
@@ -19,7 +19,6 @@ function useToken() {
       setToken(userToken);
     }
   };
-
   return {
     setToken: saveToken,
     token
@@ -30,8 +29,20 @@ function useToken() {
 export default function App() {
   const { token, setToken } = useToken()
 
+  const [isShow, setIsShow] = useState(false);
+
+  const [error, setError] = useState({})
+  emitter.on('show', (e) => { setIsShow(true), setError({ message: e }) });
+
   if (!token) {
-    return <Login setToken={setToken} />
+    return (
+      <>
+        <Login setToken={setToken} />
+        {isShow && <Modal show={isShow} handleClose={() => setIsShow(false)}>
+          <p>{error.message}</p>
+        </Modal>}
+      </>
+    )
   }
 
   return (
@@ -40,7 +51,11 @@ export default function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/dashboard">
-            <Dashboard />
+            <Dashboard >
+              {isShow && <Modal show={isShow} handleClose={() => setIsShow(false)}>
+                <p>{error.message}</p>
+              </Modal>}
+            </Dashboard>
           </Route>
         </Switch>
       </BrowserRouter>

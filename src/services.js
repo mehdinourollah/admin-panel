@@ -1,16 +1,9 @@
-// const baseUrl = "https://api.laroza.dev"
 
-async function loginUser(credentials) {
- return fetch(`/admin/login`, {
-   method: 'POST',
-   headers: {
-     'Content-Type': 'application/json'
-   },
-   body: JSON.stringify(credentials)
- })
-   .then(data => data.json())
+export const loginUser = async (credentials) => {
+  return post(`/login`, credentials)
 }
 
-export {
-    loginUser
+export const loginAdmin = async (credentials) => {
+  return post(`/admin/login`, credentials)
 }
+

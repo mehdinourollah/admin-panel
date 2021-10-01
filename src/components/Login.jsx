@@ -5,14 +5,19 @@ import Input from '../components/FormElements/Input';
 import { loginUser } from '../services'
 
 const Login = ({ setToken }) => {
-
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
 
         let email = e.target.elements.email?.value;
         let password = e.target.elements.password?.value;
 
-        loginUser({ email, password }).then(res => setToken(res.access_token)).catch(err => console.log(err));
+        try {
+            let res = await loginUser({ email, password });
+            setToken(res.access_token);
+        }
+        catch (e) {
+            showDialog(e);
+        }
     };
 
     const classes = {
