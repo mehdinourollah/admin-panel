@@ -14,4 +14,6 @@ window.showDialog = (message) => {
 }
 Object.assign(window, { ...fetchWrapper })
 
+console.log({ baseurl: process.env.base_url, NODE_ENV: process.env.NODE_ENV })
+
 ReactDOM.render(<App />, document.getElementById('root'))

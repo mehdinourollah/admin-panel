@@ -6,7 +6,7 @@ export const fetchWrapper = {
 };
 
 function get(url) {
-    console.log({ baseurl: process.env.base_url, NODE_ENV: process.env.NODE_ENV }) 
+    
     const requestOptions = {
         method: 'GET'
     };
