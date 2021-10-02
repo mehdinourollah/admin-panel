@@ -12,8 +12,8 @@ const Modal = ({ handleClose, show, children }) => {
        */
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
-          setShowHideClassName("hidden");
-
+          // setShowHideClassName("modal display-none");
+          handleClose();
         }
       }
       // Bind the event listener

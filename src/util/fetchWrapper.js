@@ -6,6 +6,7 @@ export const fetchWrapper = {
 };
 
 function get(url) {
+    
     const requestOptions = {
         method: 'GET'
     };
