@@ -1,64 +1,76 @@
-import React, { useState } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard/Dashboard';
 import Login from './Login'
-import Modal from './Modal/Modal'
 
-function useToken() {
-  const getToken = () => {
-    const tokenString = sessionStorage.getItem('token');
-    return tokenString;
 
-  };
+import { store } from '../context';
 
-  const [token, setToken] = useState(getToken());
 
-  const saveToken = userToken => {
-    if (userToken) {
-      sessionStorage.setItem('token', userToken);
-      setToken(userToken);
-    }
-  };
-  return {
-    setToken: saveToken,
-    token
-  }
-}
+
+
 
 
 export default function App() {
-  const { token, setToken } = useToken()
+  const { myToken, setToken } = useToken()
 
-  const [isShow, setIsShow] = useState(false);
+  const { state, dispatch } = useContext(store);
 
-  const [error, setError] = useState({})
-  emitter.on('show', (e) => { setIsShow(true), setError({ message: e }) });
+  function useToken() {
+    const getToken = () => {
+      const tokenString = sessionStorage.getItem('token');
+      return tokenString;
 
-  if (!token) {
-    return (
-      <>
-        <Login setToken={setToken} />
-        {isShow && <Modal show={isShow} handleClose={() => setIsShow(false)}>
-          <p>{error.message}</p>
-        </Modal>}
-      </>
-    )
+    };
+
+    const [myToken, setToken] = useState(getToken());
+
+
+    const saveToken = userToken => {
+      if (userToken) {
+        sessionStorage.setItem('token', userToken);
+        setToken(userToken);
+
+
+
+      }
+    };
+    return {
+      setToken: saveToken,
+      myToken
+    }
+  }
+
+  useEffect(() => {
+    dispatch({ type: 'login', token: myToken })
+
+
+  }, [myToken])
+
+  useEffect(() => {
+    setInterval(() => {
+
+      console.log({ state })
+    }, 2000);
+  })
+
+  if (!myToken) {
+    return (<Login setToken={setToken} />)
   }
 
   return (
+
+
     <div className="wrapper">
       <h1>Application</h1>
       <BrowserRouter>
-        <Switch>
-          <Route path="/dashboard">
-            <Dashboard >
-              {isShow && <Modal show={isShow} handleClose={() => setIsShow(false)}>
-                <p>{error.message}</p>
-              </Modal>}
-            </Dashboard>
+        <Routes>
+
+          <Route path="/dashboard" element={<Dashboard />}>
           </Route>
-        </Switch>
+        </Routes>
       </BrowserRouter>
     </div>
+
   )
 }

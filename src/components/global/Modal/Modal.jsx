@@ -3,7 +3,16 @@ import { useRef, useEffect, useState } from 'react';
 
 const Modal = ({ handleClose, show, children }) => {
 
-  const [showHideClassName, setShowHideClassName] = useState("modal" + (show ? " display-block" : " display-none"));
+  const classes = {
+    modalShown: 'fixed top-0 left-0 w-full h-full block',
+    modalHidden: 'fixed top-0 left-0 w-full h-full hidden',
+    modalMain: 'fixed bg-white w-4/5 h-auto rounded max-w-sm md:max-w-lg',
+    closeX: 'flex flex-row justify-end p-2 text-bold font-xl',
+    spanX: 'font-bold cursor-pointer',
+    childrenClass: 'flex p-1'
+  };
+
+  // const [showHideClassName, setShowHideClassName] = useState("modal" + (show ? " display-block" : " display-none"));
 
   function useOutsideAlerter(ref) {
     useEffect(() => {
@@ -27,12 +36,12 @@ const Modal = ({ handleClose, show, children }) => {
   const innerRef = useRef(null);
   useOutsideAlerter(innerRef);
   return (
-    <div className={showHideClassName} >
-      <section className="modal-main rounded max-w-sm md:max-w-lg" ref={innerRef}>
-        <div className="flex flex-row justify-end p-2 text-bold font-xl">
-          <span onClick={handleClose} className="font-bold cursor-pointer">x</span>
+    <div className={classes.modalShown} >
+      <section className={classes.modalMain} ref={innerRef}>
+        <div className={classes.closeX}>
+          <span onClick={handleClose} className={classes.spanX}>x</span>
         </div>
-        <div className="flex p-1">{children}</div>
+        <div className={classes.childrenClass}>{children}</div>
         {/* <button type="button" onClick={handleClose}>
           Close
         </button> */}

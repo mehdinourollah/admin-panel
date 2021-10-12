@@ -1,24 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { PrimaryButton } from '../components/FormElements/Button';
-import Input from '../components/FormElements/Input';
+import { PrimaryButton } from './global/Button';
+import Input from './global/Input';
 import { loginUser } from '../services'
 
 const Login = ({ setToken }) => {
+    const [error, setError] = useState({})
+
+    const [email, setEmail] = useState('')
+
+    const [password, setPassword] = useState('')
+
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-
-        let email = e.target.elements.email?.value;
-        let password = e.target.elements.password?.value;
 
         try {
             let res = await loginUser({ email, password });
             setToken(res.access_token);
         }
         catch (e) {
-            showDialog(e);
+
+            setError({ message: e })
+
+
         }
     };
+
+    useEffect(() => {
+        if (error.message) {
+            setTimeout(() => {
+                setError({})
+            }, 1000);
+        }
+        // return () => {
+
+        // }
+    }, [error])
+
+
+    // useEffect(() => {
+    //     console.log({ email, password })
+    // }, [email, password])
 
     const classes = {
         pageBody: 'h-screen flex bg-gray-bg1',
@@ -36,12 +58,16 @@ const Login = ({ setToken }) => {
 
                 <form onSubmit={handleFormSubmit}>
                     <Input
+                        value={email}
+                        onChange={(email) => setEmail(email)}
                         id='email'
                         label='Email:'
                         type='email'
                         placeholder='Your email'
                     />
                     <Input
+                        value={password}
+                        onChange={(password) => setPassword(password)}
                         id='password'
                         label='Password:'
                         type='password'
@@ -51,6 +77,9 @@ const Login = ({ setToken }) => {
                     <div className={classes.btnContainer}>
                         <PrimaryButton type='submit' text='Continue with Email' />
                     </div>
+
+                    {error && <p className="text-red">{error.message}</p>}
+
                 </form>
             </div>
         </div>
