@@ -1,4 +1,3 @@
-
 export const get = (url) => {
 
     const requestOptions = {
@@ -9,7 +8,7 @@ export const get = (url) => {
             "authorization": "Bearer " + sessionStorage.getItem("token"),
         },
     };
-    return fetch(url, requestOptions).then(handleResponse);
+    return fetch(process.env.NODE_ENV == 'production' && 'https://api.laroza.dev/' +  url, requestOptions).then(handleResponse);
 }
 
 export const post = (url, body) => {
@@ -22,7 +21,7 @@ export const post = (url, body) => {
         },
         body: JSON.stringify(body)
     };
-    return fetch(url, requestOptions).then(handleResponse);
+    return fetch(process.env.NODE_ENV == 'production' && 'https://api.laroza.dev/' + url, requestOptions).then(handleResponse);
 }
 
 export const put = (url, body) => {
@@ -35,7 +34,7 @@ export const put = (url, body) => {
         },
         body: JSON.stringify(body)
     };
-    return fetch(url, requestOptions).then(handleResponse);
+    return fetch(process.env.NODE_ENV == 'production' && 'https://api.laroza.dev/' + url, requestOptions).then(handleResponse);
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
@@ -48,7 +47,7 @@ export const _delete = (url) => {
             "authorization": "Bearer " + sessionStorage.getItem("token"),
         },
     };
-    return fetch(url, requestOptions).then(handleResponse);
+    return fetch(process.env.NODE_ENV == 'production' && 'https://api.laroza.dev/' + url, requestOptions).then(handleResponse);
 }
 
 // helper functions
