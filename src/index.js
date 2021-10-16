@@ -1,19 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
+import 'antd/dist/antd.css';
 import App from './components/App'
-import mitt from 'mitt'
-import fetchWrapper from './util/fetchWrapper'
+import { StateProvider } from './context'
 
-/**
- * global declarations
- */
-window.emitter = mitt()
-window.showDialog = (message) => {
-    emitter.emit('show', message)
-}
-Object.assign(window, { ...fetchWrapper })
-
-console.log({ base_url: process.env.base_url, NODE_ENV: process.env.NODE_ENV })
-
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(
+    <React.StrictMode>
+        <StateProvider>
+            <App />
+        </StateProvider>
+    </React.StrictMode>, document.getElementById('root'))

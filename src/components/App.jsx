@@ -1,64 +1,52 @@
-import React, { useState } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard/Dashboard';
 import Login from './Login'
-import Modal from './Modal/Modal'
+import { store } from '../context';
+import { Breadcrumb } from 'antd';
+import { HomeOutlined, UserOutlined, DashboardOutlined } from '@ant-design/icons';
 
-function useToken() {
-  const getToken = () => {
-    const tokenString = sessionStorage.getItem('token');
-    return tokenString;
+const Breadcrumbs = () => {
 
-  };
-
-  const [token, setToken] = useState(getToken());
-
-  const saveToken = userToken => {
-    if (userToken) {
-      sessionStorage.setItem('token', userToken);
-      setToken(userToken);
-    }
-  };
-  return {
-    setToken: saveToken,
-    token
-  }
+  return (
+    <Breadcrumb >
+      <Breadcrumb.Item ><a href="/">
+        <HomeOutlined />
+        Home</a></Breadcrumb.Item>
+      {location.pathname.includes('dashboard') && < Breadcrumb.Item >
+        <a href="/dashboard">
+          <DashboardOutlined />Dashboard</a>
+      </Breadcrumb.Item>
+      }
+    </Breadcrumb >)
 }
 
 
 export default function App() {
-  const { token, setToken } = useToken()
+  const { state, dispatch } = useContext(store);
 
-  const [isShow, setIsShow] = useState(false);
+  const getToken = () => {
+    dispatch({ type: 'getToken' })
+  };
 
-  const [error, setError] = useState({})
-  emitter.on('show', (e) => { setIsShow(true), setError({ message: e }) });
+  useEffect(() => {
+    getToken()
+  }, [])
 
-  if (!token) {
-    return (
-      <>
-        <Login setToken={setToken} />
-        {isShow && <Modal show={isShow} handleClose={() => setIsShow(false)}>
-          <p>{error.message}</p>
-        </Modal>}
-      </>
-    )
+
+  if (!state.token) {
+    return (<Login />)
   }
-
   return (
     <div className="wrapper">
-      <h1>Application</h1>
+      <Breadcrumbs />
       <BrowserRouter>
-        <Switch>
-          <Route path="/dashboard">
-            <Dashboard >
-              {isShow && <Modal show={isShow} handleClose={() => setIsShow(false)}>
-                <p>{error.message}</p>
-              </Modal>}
-            </Dashboard>
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard />}>
           </Route>
-        </Switch>
+        </Routes>
       </BrowserRouter>
     </div>
+
   )
 }
