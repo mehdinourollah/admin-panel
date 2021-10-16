@@ -5,8 +5,6 @@ import 'antd/dist/antd.css';
 import App from './components/App'
 import { StateProvider } from './context'
 
-
-
 ReactDOM.render(
     <React.StrictMode>
         <StateProvider>
