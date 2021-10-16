@@ -8,7 +8,7 @@ export const get = (url) => {
             "authorization": "Bearer " + sessionStorage.getItem("token"),
         },
     };
-    return fetch(process.env.NODE_ENV == 'production' && 'https://api.laroza.dev/' +  url, requestOptions).then(handleResponse);
+    return fetch(process.env.NODE_ENV == 'production' && 'https://api.laroza.dev' +  url, requestOptions).then(handleResponse);
 }
 
 export const post = (url, body) => {
