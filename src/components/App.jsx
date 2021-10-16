@@ -14,7 +14,7 @@ const Breadcrumbs = () => {
         <HomeOutlined />
         Home</a></Breadcrumb.Item>
       {location.pathname.includes('dashboard') && < Breadcrumb.Item >
-        <a href="/dashboard">
+        <a href="/">
           <DashboardOutlined />Dashboard</a>
       </Breadcrumb.Item>
       }
@@ -42,7 +42,7 @@ export default function App() {
       <Breadcrumbs />
       <BrowserRouter>
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="/" element={<Dashboard />}>
           </Route>
         </Routes>
       </BrowserRouter>
