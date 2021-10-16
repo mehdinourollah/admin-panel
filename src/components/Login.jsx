@@ -1,28 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useContext } from 'react';
 import { PrimaryButton } from './global/Button';
 import Input from './global/Input';
 import { loginUser } from '../services'
+import { store } from '../context';
 
-const Login = ({ setToken }) => {
+const Login = () => {
     const [error, setError] = useState({})
-
+    const [isLoading, setIsLoading] = useState(false)
     const [email, setEmail] = useState('')
-
     const [password, setPassword] = useState('')
+
+
+    const { dispatch } = useContext(store);
+
+    const saveToken = userToken => {
+        if (userToken) {
+            dispatch({ type: 'login', token: userToken })
+        }
+    };
+
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-
         try {
+            setIsLoading(true)
             let res = await loginUser({ email, password });
-            setToken(res.access_token);
+            saveToken(res.access_token);
+            setIsLoading(false)
         }
         catch (e) {
-
             setError({ message: e })
-
-
+            setIsLoading(false)
         }
     };
 
@@ -32,15 +40,8 @@ const Login = ({ setToken }) => {
                 setError({})
             }, 1000);
         }
-        // return () => {
-
-        // }
     }, [error])
 
-
-    // useEffect(() => {
-    //     console.log({ email, password })
-    // }, [email, password])
 
     const classes = {
         pageBody: 'h-screen flex bg-gray-bg1',
@@ -75,7 +76,8 @@ const Login = ({ setToken }) => {
                     />
 
                     <div className={classes.btnContainer}>
-                        <PrimaryButton type='submit' text='Continue with Email' />
+                        {isLoading ? 'Loading...'
+                            : <PrimaryButton type='submit' text='Continue with Email' />}
                     </div>
 
                     {error && <p className="text-red">{error.message}</p>}
@@ -85,10 +87,6 @@ const Login = ({ setToken }) => {
         </div>
     );
 };
-
-Login.propTypes = {
-    setToken: PropTypes.func.isRequired
-}
 
 export default Login;
 

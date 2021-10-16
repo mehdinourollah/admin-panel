@@ -14,6 +14,22 @@ const PrimaryButton = ({type, text}) => {
     )
 }
 
+const DangerButton = ({type, text,onClick}) => {
+    const classes = {
+        btnDanger: 'bg-red py-2 px-6 text-sm text-white rounded border border-red focus:outline-none focus:border-red-dark'
+    }
+    return (
+        <button 
+            type={type}
+            className={classes.btnDanger}
+            onClick={onClick}
+        >
+            {text}
+        </button>
+    )
+}
+
 export {
-    PrimaryButton
+    PrimaryButton,
+    DangerButton
 } 
