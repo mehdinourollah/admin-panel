@@ -2,7 +2,12 @@
 export const get = (url) => {
 
     const requestOptions = {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "authorization": "Bearer " + sessionStorage.getItem("token"),
+        },
     };
     return fetch(url, requestOptions).then(handleResponse);
 }
@@ -10,7 +15,11 @@ export const get = (url) => {
 export const post = (url, body) => {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "authorization": "Bearer " + sessionStorage.getItem("token"),
+        },
         body: JSON.stringify(body)
     };
     return fetch(url, requestOptions).then(handleResponse);
@@ -19,7 +28,11 @@ export const post = (url, body) => {
 export const put = (url, body) => {
     const requestOptions = {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "authorization": "Bearer " + sessionStorage.getItem("token"),
+        },
         body: JSON.stringify(body)
     };
     return fetch(url, requestOptions).then(handleResponse);
@@ -28,14 +41,19 @@ export const put = (url, body) => {
 // prefixed with underscored because delete is a reserved word in javascript
 export const _delete = (url) => {
     const requestOptions = {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "authorization": "Bearer " + sessionStorage.getItem("token"),
+        },
     };
     return fetch(url, requestOptions).then(handleResponse);
 }
 
 // helper functions
 
-function handleResponse(response) {
+export function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
 
@@ -47,4 +65,8 @@ function handleResponse(response) {
         return data;
     });
 }
+
+
+
+
 
