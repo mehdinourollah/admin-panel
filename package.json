@@ -1,29 +1,28 @@
 {
   "name": "admin-panel",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./src/index.js",
-  "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
-  },
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "@craco/craco": "^6.3.0",
-    "@reduxjs/toolkit": "^1.6.1",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "antd": "^4.16.13",
-    "mitt": "^3.0.0",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "node-fetch": "^3.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.5",
-    "react-router-dom": "^6.0.0-beta.5",
-    "react-scripts": "4.0.3",
-    "node-fetch": "^2.6.7"
+    "react-scripts": "5.0.0",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
@@ -35,30 +34,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@storybook/addon-actions": "^6.3.9",
-    "@storybook/addon-essentials": "^6.3.9",
-    "@storybook/addon-links": "^6.3.9",
-    "@storybook/node-logger": "^6.3.9",
-    "@storybook/preset-create-react-app": "^3.2.0",
-    "@storybook/react": "^6.3.9",
-    "autoprefixer": "^9.8.7",
-    "postcss": "^7.0.38",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16"
-  },
-  "proxy": "https://api.laroza.dev",
-  "eslintConfig": {
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
     ]
   }
 }
